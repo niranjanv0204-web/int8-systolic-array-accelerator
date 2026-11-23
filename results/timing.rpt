@@ -1,0 +1,58 @@
+Startpoint: _19191_ (rising edge-triggered flip-flop clocked by clk)
+Endpoint: _19183_ (rising edge-triggered flip-flop clocked by clk)
+Path Group: clk
+Path Type: min
+
+  Delay    Time   Description
+---------------------------------------------------------
+   0.00    0.00   clock clk (rise edge)
+   0.61    0.61   clock network delay (propagated)
+   0.00    0.61 ^ _19191_/CLK (sky130_fd_sc_hd__dfxtp_1)
+   0.30    0.90 ^ _19191_/Q (sky130_fd_sc_hd__dfxtp_1)
+   0.10    1.01 ^ _14811_/X (sky130_fd_sc_hd__and2_0)
+   0.00    1.01 ^ _19183_/D (sky130_fd_sc_hd__dfxtp_1)
+           1.01   data arrival time
+
+   0.00    0.00   clock clk (rise edge)
+   0.61    0.61   clock network delay (propagated)
+   0.00    0.61   clock reconvergence pessimism
+           0.61 ^ _19183_/CLK (sky130_fd_sc_hd__dfxtp_1)
+  -0.03    0.58   library hold time
+           0.58   data required time
+---------------------------------------------------------
+           0.58   data required time
+          -1.01   data arrival time
+---------------------------------------------------------
+           0.43   slack (MET)
+
+
+Startpoint: _18474_ (rising edge-triggered flip-flop clocked by clk)
+Endpoint: _18995_ (rising edge-triggered flip-flop clocked by clk)
+Path Group: clk
+Path Type: max
+
+  Delay    Time   Description
+---------------------------------------------------------
+   0.00    0.00   clock clk (rise edge)
+   0.62    0.62   clock network delay (propagated)
+   0.00    0.62 ^ _18474_/CLK (sky130_fd_sc_hd__dfxtp_1)
+   0.32    0.94 v _18474_/Q (sky130_fd_sc_hd__dfxtp_1)
+   9.90   10.84 ^ _09615_/X (sky130_fd_sc_hd__lpflow_isobufsrc_1)
+   1.13   11.97 v _15761_/Y (sky130_fd_sc_hd__o21ai_0)
+   0.52   12.48 ^ _15762_/Y (sky130_fd_sc_hd__a21oi_1)
+   0.00   12.48 ^ _18995_/D (sky130_fd_sc_hd__dfxtp_1)
+          12.48   data arrival time
+
+  20.00   20.00   clock clk (rise edge)
+   0.61   20.61   clock network delay (propagated)
+   0.00   20.61   clock reconvergence pessimism
+          20.61 ^ _18995_/CLK (sky130_fd_sc_hd__dfxtp_1)
+  -0.12   20.49   library setup time
+          20.49   data required time
+---------------------------------------------------------
+          20.49   data required time
+         -12.48   data arrival time
+---------------------------------------------------------
+           8.01   slack (MET)
+
+

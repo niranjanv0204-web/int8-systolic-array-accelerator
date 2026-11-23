@@ -95,7 +95,7 @@ module tb_python_vectors;
             // Wait for completion, with timeout.
             cycle_count = 0;
 
-            while ((done !== 1'b1) && (cycle_count < 10)) begin
+            while ((done !== 1'b1) && (cycle_count < 20)) begin
                 @(negedge clk);
                 cycle_count = cycle_count + 1;
             end

@@ -16,10 +16,13 @@ A 4×4 INT8 weight-stationary systolic-array hardware accelerator (16 MACs/cycle
 - **Post-PnR Deliverables:**
   - Layout GDSII: `results/sa_top.gds`
   - Timing Report: `results/timing.rpt` (worst slack: `8.01`)
+- **Interactive Demo:**
+  - Open `docs/live_demo.html` in any browser to test MNIST samples or draw digits and inspect layer activations, logits, and the 4×4 wavefront.
+
+## Team
+- **Authors:** Bilal Ahmad, MD Kashif Khan, Niranjan Vishwakarma
+- **Guidance:** Mr. Alok Kumar, Department of VLSI and Communication Technology, Galgotias College of Engineering and Technology, Greater Noida (AKTU)
 
 ## Interactive Demo
 - **Repository File:** [`docs/live_demo.html`](docs/live_demo.html) (Download and open in any browser to test MNIST digits and inspect the 4×4 systolic wavefront)
-- **GitHub Pages URL (after enabling Pages from `/docs`):** [Open Live Browser Demo](https://niranjanv0204-web.github.io/int8-systolic-array-accelerator/live_demo.html)
-
-## Team
-- **Authors:** Niranjan Vishwakarma, Bilal Ahmad
+- **Live Browser Demo (GitHub Pages):** [Open Interactive Demo](https://niranjanv0204-web.github.io/int8-systolic-array-accelerator/live_demo.html)

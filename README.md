@@ -43,10 +43,3 @@ systolic-array-ai-accelerator-main/
 ├── results/
 │   ├── pnr.log              # OpenROAD Place & Route execution log
 │   ├── route_drc.rpt        # Post-routing DRC report (0 violations)
-│   ├── sa_top.gds           # Final fabrication-ready GDSII layout
-│   ├── synth.log            # Yosys synthesis log
-│   └── timing.rpt           # Static Timing Analysis (STA) report
-├── rtl/                     # Accelerator RTL modules
-├── scripts/                 # Yosys, OpenROAD, and GDSII export scripts
-├── tb/                      # Functional Verilog testbench
-└── Makefile                 # Automated build, simulation, and PnR targets

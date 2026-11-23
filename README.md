@@ -1,28 +1,52 @@
-# INT8 Systolic Array AI Accelerator
+# 4x4 Systolic Array AI Accelerator — RTL-to-GDSII Flow
 
-A 4×4 INT8 weight-stationary systolic-array hardware accelerator (16 MACs/cycle) for MNIST edge inference (`784-32-10`), verified bit-exactly against a Python golden model and taken through post-PnR physical design deliverables (`results/sa_top.gds`, `results/timing.rpt`), along with an interactive browser demo (`docs/live_demo.html`).
+## Overview
+This project implements an end-to-end digital ASIC design and physical implementation of a **4x4 Weight-Stationary Systolic Array AI Accelerator** in Verilog HDL. It accelerates matrix multiplication workloads using a grid of Processing Elements (PEs) with dedicated input activation skewing, taken from RTL through logic synthesis and Place & Route (PnR) to a fabrication-ready GDSII layout on the open-source **SkyWater 130nm (`sky130A`) PDK**.
 
-## Architecture Highlights
-- **Compute Array:** 4×4 weight-stationary Processing Element (PE) grid performing 16 signed INT8 MACs per cycle with 32-bit accumulation.
-- **Dataflow & Control:** Input skew logic, weight/input buffers, and an FSM controller (`LOAD` / `STREAM` / `DRAIN`) with tiling support for multi-layer FC inference.
-- **Post-Processing:** Hardware ReLU activation and Q31 requantization back to INT8.
+## Architecture
 
-## Verification & Physical Design Summary
-- **RTL & Golden Model Verification:**
-  - `tb_systolic_4x4.v`: 432/432 checks passed
-  - `tb_python_vectors.v`: 1,568/1,568 test vectors passed (25,088 INT32 comparisons)
-  - `tb_mnist_end_to_end.v`: 172/172 checks passed
-  - `tb_mnist_100_images.v`: 1,125/1,125 checks passed (98% inference accuracy)
-- **Post-PnR Deliverables:**
-  - Layout GDSII: `results/sa_top.gds`
-  - Timing Report: `results/timing.rpt` (worst slack: `8.01`)
-- **Interactive Demo:**
-  - Open `docs/live_demo.html` in any browser to test MNIST samples or draw digits and inspect layer activations, logits, and the 4×4 wavefront.
+### Dataflow & Execution Stages
+1. **Weight Loading:** Stationary weights are pre-loaded into each Processing Element (`pe.v`) across the 4x4 array prior to compute cycles.
+2. **Input Activation Skewing:** Dedicated delay registers (`skew.v`) stagger incoming activation rows diagonally to synchronize wavefront arrival at each PE.
+3. **Systolic Multiply-Accumulate (MAC):** Each PE multiplies incoming activations with its stored stationary weight and accumulates partial sums vertically down the column.
+4. **Output Collection:** Final accumulated matrix product results exit the bottom row of the 4x4 array (`sa_core.v` / `sa_top.v`).
 
-## Team
-- **Authors:** Bilal Ahmad, MD Kashif Khan, Niranjan Vishwakarma
-- **Guidance:** Mr. Alok Kumar, Department of VLSI and Communication Technology, Galgotias College of Engineering and Technology, Greater Noida (AKTU)
+### Features
+- 4x4 Weight-Stationary Systolic Array datapath
+- 16 Processing Elements (PEs) with local weight registers and MAC units
+- Hardware input data-skewing registers for systolic wavefront alignment
+- Modular, synthesizable Verilog RTL design
+- Self-checking Verilog functional testbench
+- Automated open-source RTL-to-GDSII flow (Yosys + OpenROAD + KLayout)
+- SkyWater 130nm (`sky130_fd_sc_hd`) standard-cell implementation with 0 DRC violations
+- Interactive browser-based live demo ([`docs/live_demo.html`](docs/live_demo.html))
 
-## Interactive Demo
-- **Repository File:** [`docs/live_demo.html`](docs/live_demo.html) (Download and open in any browser to test MNIST digits and inspect the 4×4 systolic wavefront)
-- **Live Browser Demo (GitHub Pages):** [Open Interactive Demo](https://niranjanv0204-web.github.io/int8-systolic-array-accelerator/live_demo.html)
+## RTL Modules
+
+| Module | Description |
+|---|---|
+| `pe.v` | Processing Element (MAC unit with weight-stationary register) |
+| `skew.v` | Input activation skewing registers for systolic wavefront alignment |
+| `systolic_array.v` | 4x4 Processing Element mesh interconnect |
+| `sa_core.v` | Core controller and systolic array integration |
+| `sa_top.v` | Top-level chip wrapper (`sa_top`) |
+
+## Project Structure
+
+```text
+systolic-array-ai-accelerator-main/
+├── constraints/
+│   └── sa_top.sdc           # Timing constraints (SDC)
+├── docs/
+│   ├── layout_preview.png   # Post-PnR physical layout screenshot (KLayout)
+│   └── live_demo.html       # Interactive browser-based live demo
+├── results/
+│   ├── pnr.log              # OpenROAD Place & Route execution log
+│   ├── route_drc.rpt        # Post-routing DRC report (0 violations)
+│   ├── sa_top.gds           # Final fabrication-ready GDSII layout
+│   ├── synth.log            # Yosys synthesis log
+│   └── timing.rpt           # Static Timing Analysis (STA) report
+├── rtl/                     # Accelerator RTL modules
+├── scripts/                 # Yosys, OpenROAD, and GDSII export scripts
+├── tb/                      # Functional Verilog testbench
+└── Makefile                 # Automated build, simulation, and PnR targets

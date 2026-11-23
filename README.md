@@ -98,9 +98,6 @@ The synthesized netlist was taken through floorplanning, placement, clock tree s
 | **Design Rule Check (DRC)** | OpenROAD (`results/route_drc.rpt`) | **0 DRC Violations** (Clean) |
 | **Final GDSII Artifact** | KLayout (`results/sa_top.gds`) | Verified standard-cell & routing geometry |
 
-### Post-PnR GDSII Layout (`sa_top.gds`)
-
-![4x4 Systolic Array GDSII Layout](docs/layout_preview.png)
 
 * **Full GDSII & Design Artifacts (Google Drive):** [Download / View `sa_top.gds` & Project Archive](https://drive.google.com/file/d/1kn9kp622gy0I48O0_KbN6Dc86Hj4ESli/view?usp=drivesdk)
 * **Local GDSII Path:** `results/sa_top.gds`

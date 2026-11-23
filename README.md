@@ -19,7 +19,6 @@ This project implements an end-to-end digital ASIC design and physical implement
 - Self-checking Verilog functional testbench
 - Automated open-source RTL-to-GDSII flow (Yosys + OpenROAD + KLayout)
 - SkyWater 130nm (`sky130_fd_sc_hd`) standard-cell implementation with 0 DRC violations
-- Interactive browser-based live demo ([`docs/live_demo.html`](docs/live_demo.html))
 
 ## RTL Modules
 
@@ -38,8 +37,76 @@ systolic-array-ai-accelerator-main/
 ├── constraints/
 │   └── sa_top.sdc           # Timing constraints (SDC)
 ├── docs/
-│   ├── layout_preview.png   # Post-PnR physical layout screenshot (KLayout)
-│   └── live_demo.html       # Interactive browser-based live demo
+│   └── layout_preview.png   # Post-PnR physical layout screenshot (KLayout)
 ├── results/
 │   ├── pnr.log              # OpenROAD Place & Route execution log
 │   ├── route_drc.rpt        # Post-routing DRC report (0 violations)
+│   ├── sa_top.gds           # Final fabrication-ready GDSII layout
+│   ├── synth.log            # Yosys synthesis log
+│   └── timing.rpt           # Static Timing Analysis (STA) report
+├── rtl/                     # Accelerator RTL modules
+├── scripts/                 # Yosys, OpenROAD, and GDSII export scripts
+├── tb/                      # Functional Verilog testbench
+└── Makefile                 # Automated build, simulation, and PnR targets
+```
+
+## Simulation
+
+Run these commands from the project root to execute RTL simulation:
+
+```bash
+make sim
+```
+
+*(Alternatively, run directly using Icarus Verilog and GTKWave:)*
+
+```bash
+iverilog -g2012 -o sim.out rtl/*.v tb/tb_sa.v
+vvp sim.out
+```
+
+## Verification Results
+
+The systolic array was simulated using a self-checking Verilog testbench (`tb/tb_sa.v`) to validate weight loading, diagonal activation skewing, and matrix multiplication output accuracy:
+
+| Test Case | Verified Operation | Status |
+|---|---|---|
+| Reset & Initialization | Clean register state initialization | PASS |
+| Weight Stationary Load | All 16 PE weight registers loaded accurately | PASS |
+| Input Skew Alignment | Diagonal activation wavefront synchronization across rows | PASS |
+| 4x4 Matrix Multiplication | Accumulated partial sums match expected reference matrix | PASS |
+| Back-to-Back Compute | Consecutive matrix streams without pipeline stalls or hazards | PASS |
+
+**Regression result: ALL VERIFICATION TESTS PASSED**
+
+## Synthesis
+
+The RTL was synthesized and mapped to the **SkyWater 130nm (`sky130_fd_sc_hd`)** standard-cell library using **Yosys** (`scripts/synth.ys` and `scripts/synth_flat.ys`).
+
+* The synthesis log and gate-level statistics are available at [`results/synth.log`](results/synth.log).
+* Timing constraints used during synthesis and physical design are defined in [`constraints/sa_top.sdc`](constraints/sa_top.sdc).
+
+## Physical Design & Layout Evidence
+
+The synthesized netlist was taken through floorplanning, placement, clock tree synthesis (CTS), global/detailed routing, and Static Timing Analysis (STA) using **OpenROAD** (`scripts/pnr.tcl`), followed by GDSII export (`scripts/export_gds.py`).
+
+| Signoff Stage / Metric | Tool / Report | Result |
+|---|---|---|
+| **Process Node & Library** | SkyWater 130nm (`sky130A`) | `sky130_fd_sc_hd` |
+| **Place & Route (PnR)** | OpenROAD (`results/pnr.log`) | Completed (Floorplan, CTS, Routing) |
+| **Static Timing Analysis (STA)** | OpenSTA (`results/timing.rpt`) | Timing constraints met (`sa_top.sdc`) |
+| **Design Rule Check (DRC)** | OpenROAD (`results/route_drc.rpt`) | **0 DRC Violations** (Clean) |
+| **Final GDSII Artifact** | KLayout (`results/sa_top.gds`) | Verified standard-cell & routing geometry |
+
+### Post-PnR GDSII Layout (`sa_top.gds`)
+
+![4x4 Systolic Array GDSII Layout](docs/layout_preview.png)
+
+* **Full GDSII & Design Artifacts (Google Drive):** [Download / View `sa_top.gds` & Project Archive](https://drive.google.com/file/d/1kn9kp622gy0I48O0_KbN6Dc86Hj4ESli/view?usp=drivesdk)
+* **Local GDSII Path:** `results/sa_top.gds`
+
+## Scope and Limitations
+
+- Implements a 4x4 weight-stationary systolic array optimized for dense matrix multiplication (`GEMM`) kernels.
+- Input activations and stationary weights use fixed-width integer arithmetic as defined in the current RTL parameters.
+- Physical design signoff covers RTL-to-GDSII synthesis, PnR, STA, and internal OpenROAD routing DRC (`0` violations) on `sky130A`.

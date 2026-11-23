@@ -19,6 +19,10 @@ This project implements an end-to-end digital ASIC design and physical implement
 - Self-checking Verilog functional testbench
 - Automated open-source RTL-to-GDSII flow (Yosys + OpenROAD + KLayout)
 - SkyWater 130nm (`sky130_fd_sc_hd`) standard-cell implementation with 0 DRC violations
+<<<<<<< HEAD
+=======
+- Interactive browser-based live demo ([`docs/live_demo.html`](docs/live_demo.html))
+>>>>>>> 795c705 (Update README.md with live demo link in original format)
 
 ## RTL Modules
 
@@ -37,7 +41,12 @@ systolic-array-ai-accelerator-main/
 ├── constraints/
 │   └── sa_top.sdc           # Timing constraints (SDC)
 ├── docs/
+<<<<<<< HEAD
 │   └── layout_preview.png   # Post-PnR physical layout screenshot (KLayout)
+=======
+│   ├── layout_preview.png   # Post-PnR physical layout screenshot (KLayout)
+│   └── live_demo.html       # Interactive browser-based live demo
+>>>>>>> 795c705 (Update README.md with live demo link in original format)
 ├── results/
 │   ├── pnr.log              # OpenROAD Place & Route execution log
 │   ├── route_drc.rpt        # Post-routing DRC report (0 violations)
@@ -98,6 +107,12 @@ The synthesized netlist was taken through floorplanning, placement, clock tree s
 | **Design Rule Check (DRC)** | OpenROAD (`results/route_drc.rpt`) | **0 DRC Violations** (Clean) |
 | **Final GDSII Artifact** | KLayout (`results/sa_top.gds`) | Verified standard-cell & routing geometry |
 
+<<<<<<< HEAD
+=======
+### Post-PnR GDSII Layout (`sa_top.gds`)
+
+![4x4 Systolic Array GDSII Layout](docs/layout_preview.png)
+>>>>>>> 795c705 (Update README.md with live demo link in original format)
 
 * **Full GDSII & Design Artifacts (Google Drive):** [Download / View `sa_top.gds` & Project Archive](https://drive.google.com/file/d/1kn9kp622gy0I48O0_KbN6Dc86Hj4ESli/view?usp=drivesdk)
 * **Local GDSII Path:** `results/sa_top.gds`
@@ -105,5 +120,9 @@ The synthesized netlist was taken through floorplanning, placement, clock tree s
 ## Scope and Limitations
 
 - Implements a 4x4 weight-stationary systolic array optimized for dense matrix multiplication (`GEMM`) kernels.
+<<<<<<< HEAD
 - Input activations and stationary weights use fixed-width integer arithmetic as defined in the current RTL parameters.
+=======
+- Input activations and stationary weights use fixed-width integer arithmetic as defined in the RTL parameters.
+>>>>>>> 795c705 (Update README.md with live demo link in original format)
 - Physical design signoff covers RTL-to-GDSII synthesis, PnR, STA, and internal OpenROAD routing DRC (`0` violations) on `sky130A`.

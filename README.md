@@ -22,7 +22,6 @@ This project implements an end-to-end digital ASIC design and physical implement
 <<<<<<< HEAD
 =======
 - Interactive browser-based live demo ([`docs/live_demo.html`](docs/live_demo.html))
->>>>>>> 795c705 (Update README.md with live demo link in original format)
 
 ## RTL Modules
 

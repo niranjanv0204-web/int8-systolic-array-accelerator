@@ -106,7 +106,7 @@ The synthesized netlist was taken through floorplanning, placement, clock tree s
 | **Design Rule Check (DRC)** | OpenROAD (`results/route_drc.rpt`) | **0 DRC Violations** (Clean) |
 | **Final GDSII Artifact** | KLayout (`results/sa_top.gds`) | Verified standard-cell & routing geometry |
 
-<<<<<<< HEAD
+
 =======
 ### Post-PnR GDSII Layout (`sa_top.gds`)
 
@@ -118,9 +118,7 @@ The synthesized netlist was taken through floorplanning, placement, clock tree s
 ## Scope and Limitations
 
 - Implements a 4x4 weight-stationary systolic array optimized for dense matrix multiplication (`GEMM`) kernels.
-<<<<<<< HEAD
 - Input activations and stationary weights use fixed-width integer arithmetic as defined in the current RTL parameters.
-=======
+  ======
 - Input activations and stationary weights use fixed-width integer arithmetic as defined in the RTL parameters.
->>>>>>> 795c705 (Update README.md with live demo link in original format)
 - Physical design signoff covers RTL-to-GDSII synthesis, PnR, STA, and internal OpenROAD routing DRC (`0` violations) on `sky130A`.

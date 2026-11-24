@@ -119,6 +119,6 @@ The synthesized netlist was taken through floorplanning, placement, clock tree s
 
 - Implements a 4x4 weight-stationary systolic array optimized for dense matrix multiplication (`GEMM`) kernels.
 - Input activations and stationary weights use fixed-width integer arithmetic as defined in the current RTL parameters.
-  ======
+
 - Input activations and stationary weights use fixed-width integer arithmetic as defined in the RTL parameters.
 - Physical design signoff covers RTL-to-GDSII synthesis, PnR, STA, and internal OpenROAD routing DRC (`0` violations) on `sky130A`.

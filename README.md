@@ -1,4 +1,4 @@
-# 4x4 INT8 systolic array accelerator — RTL-to-GDSII Flow
+# 4x4 INT8 systolic array ai-accelerator — RTL-to-GDSII Flow
 
 ## Overview
 This project implements an end-to-end digital ASIC design and physical implementation of a **4x4 Weight-Stationary Systolic Array AI Accelerator** in Verilog HDL. It accelerates matrix multiplication workloads using a grid of Processing Elements (PEs) with dedicated input activation skewing, taken from RTL through logic synthesis and Place & Route (PnR) to a fabrication-ready GDSII layout on the open-source **SkyWater 130nm (`sky130A`) PDK**.
